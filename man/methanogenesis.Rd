@@ -25,11 +25,11 @@ methanogenesis(
 \code{methanogenesis} Calculates CH4 produced, H2 consumed, CO2 consumed, and Gibbs free energy changes as dissolved inorganic carbon is consumed.
 }
 \details{
-@param CH4.initial
- @param K.CH4
- @param H2.initial
- @param K.H2
-
+@param CH4.initial Concentration of initial dissolved CH4.
+ @param K.CH4 Henry's constant for CH4.
+ @param H2.initial Concentration of initial dissolved H2.
+ @param K.H2 Henry's constant for H2.
+ @return Data frame for reaction results.
  @example
  methanogenesis(CH4.initial = 1e-6, K.CH4 = K.CH4, H2.initial = 5e-4,K.H2 = K.H2,DIC.initial = 3.2e-3,pH.initial = 7.5,K.CO2 = K.CO2,K.CO2HCO3 = K.CO2HCO3,K.HCO3CO3 = K.HCO3CO3,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
 }
