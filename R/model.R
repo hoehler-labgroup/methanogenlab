@@ -47,7 +47,7 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
   return(init_frame)
 }
 
-
+#' @export
 methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K.H2=0.000666251556662516,
                            DIC.initial, pH.initial, K.CO2=0.023464592, K.CO2HCO3 = 5.223196e-07, K.HCO3CO3 = 6.01886e-11, standard.gibbs,
                            temperature, VolumeSolution, VolumeHeadspace, delta.DIC){
