@@ -1,5 +1,5 @@
 #' Henry's constant for typical gas
-#' @parm test 2
+#' @param test 2
 #' @export
 calculate_Kgas <- function(bunsen, molar.vol.gas){
   Kgas <- bunsen / molar.vol.gas

@@ -1,3 +1,4 @@
+#' @keywords internal
 init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
                  DIC.initial, pH.initial, K.CO2, standard.gibbs,
                  temperature, VolumeSolution, VolumeHeadspace, K.CO2HCO3 = 5.223196e-07,K.HCO3CO3 = 6.01886e-11){

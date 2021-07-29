@@ -6,6 +6,9 @@
 \usage{
 calculate_Kgas(bunsen, molar.vol.gas)
 }
+\arguments{
+\item{test}{2}
+}
 \description{
 Henry's constant for typical gas
 }
