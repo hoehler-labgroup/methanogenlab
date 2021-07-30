@@ -22,7 +22,7 @@ calculate_KH(reactants, moles, phases, temperature, pressure)
 }
 \examples{
 For the equilibrium,
-\eqn{CO_2 (aq)}+\eqn{H_2 O (l)} --> \eqn{HCO_3 ^- (aq)}+\eqn{H^+ (aq)}
+\deqn{CO_2 (aq)}+\deqn{H_2 O (l)} --> \deqn{HCO_3 ^- (aq)}+\deqn{H^+ (aq)}
 
 
 calculate_KH(c("CO2","H2O","HCO3-","H+"),c(-1,-1,1,1),c("aq","l","aq","aq"), 273.15+37,1.7)
