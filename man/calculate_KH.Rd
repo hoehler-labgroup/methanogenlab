@@ -20,11 +20,14 @@ calculate_KH(reactants, moles, phases, temperature, pressure)
 \description{
 `calculate_KH` utilizes the subcrt function from Jeffrey Dick's CHNOSZ R package to calculate equilibrium constants.
 }
+\details{
+For the following chemical equilibrium:
+\loadmathjax
+\mjdeqn{CO_2(aq)+H_2O(l) \leftrightharpoons {HCO_3}^{2-}(aq)+H^+(aq)
+}{ASCII representation}
+an example can found below
+}
 \examples{
-For the equilibrium,
-\deqn{CO_2 (aq)}+\deqn{H_2 O (l)} --> \deqn{HCO_3 ^- (aq)}+\deqn{H^+ (aq)}
-
-
 calculate_KH(c("CO2","H2O","HCO3-","H+"),c(-1,-1,1,1),c("aq","l","aq","aq"), 273.15+37,1.7)
 
 }

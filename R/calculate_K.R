@@ -18,11 +18,13 @@ calculate_Kgas <- function(bunsen, molar.vol.gas){
 #' @param temperature Temperature of the system, in Kelvin.
 #' @param pressure The pressure of the system, in atm.
 #'
+#' @details
+#' For the following chemical equilibrium:
+#' \loadmathjax
+#' \mjdeqn{CO_2(aq)+H_2O(l) \leftrightharpoons {HCO_3}^{2-}(aq)+H^+(aq)
+#' }{ASCII representation}
+#' an example can found below
 #' @examples
-#' For the equilibrium,
-#' \deqn{CO_2 (aq)}+\deqn{H_2 O (l)} --> \deqn{HCO_3 ^- (aq)}+\deqn{H^+ (aq)}
-#'
-#'
 #' calculate_KH(c("CO2","H2O","HCO3-","H+"),c(-1,-1,1,1),c("aq","l","aq","aq"), 273.15+37,1.7)
 #'
 #' @export
@@ -30,3 +32,4 @@ calculate_KH <- function(reactants, moles, phases, temperature, pressure){
   KH = 10^(as.numeric(subcrt(reactants,moles,phases,T= (temperature-273.15),P=pressure*1.01325)[[2]][4:4]))
   return(KH)
 }
+
