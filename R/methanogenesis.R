@@ -48,7 +48,7 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 }
 #' Steps through DIC consumption during a methanogenesis reaction
 #'
-#' `methanogenesis()` Calculates CH4 produced, H2 consumed, CO2 consumed, and Gibbs free energy changes as dissolved inorganic carbon is consumed.
+#' `methanogenesis()` calculates CH4 produced, H2 consumed, CO2 consumed, and Gibbs free energy changes as dissolved inorganic carbon is consumed.
 #'
 #' @param CH4.initial Concentration of initial dissolved CH4.
 #' @param K.CH4 Henry's constant for CH4.
