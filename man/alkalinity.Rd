@@ -17,17 +17,17 @@ alkalinity(
 \arguments{
 \item{nDIC}{Moles of dissolved inorganic carbon}
 
-\item{VolumeSolution}{Volume of liquid in the closed system, in liters}
+\item{VolumeSolution}{Volume of liquid in the closed system, in liters.}
 
-\item{VolumeHeadspace}{Volume of gaseous headspace in the closed system, in liters}
+\item{VolumeHeadspace}{Volume of gaseous headspace in the closed system, in liters.}
 
-\item{temperature}{Temperature of the system, in Kelvin}
+\item{temperature}{Temperature of the system, in Kelvin.}
 
-\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default}
+\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.}
 
 \item{pH.initial}{Initial pH}
 
-\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default}
+\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.}
 }
 \value{
 alkalinity of the solution, in millimolar

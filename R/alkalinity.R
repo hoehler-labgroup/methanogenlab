@@ -4,11 +4,11 @@
 #'
 #' @param pH.initial Initial pH
 #' @param nDIC Moles of dissolved inorganic carbon
-#' @param VolumeSolution Volume of liquid in the closed system, in liters
-#' @param VolumeHeadspace Volume of gaseous headspace in the closed system, in liters
-#' @param temperature Temperature of the system, in Kelvin
-#' @param K.CO2HCO3 Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default
-#' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default
+#' @param VolumeSolution Volume of liquid in the closed system, in liters.
+#' @param VolumeHeadspace Volume of gaseous headspace in the closed system, in liters.
+#' @param temperature Temperature of the system, in Kelvin.
+#' @param K.CO2HCO3 Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.
+#' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.
 #' @return alkalinity of the solution, in millimolar
 
 alkalinity <- function(pH, nDIC, VolumeSolution, VolumeHeadspace, temperature,K.CO2HCO3 = 5.223196e-07, K.HCO3CO3 = 6.01886e-11){

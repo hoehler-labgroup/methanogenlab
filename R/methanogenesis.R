@@ -1,3 +1,20 @@
+#' Determines initial conditions from initial inputs
+#'
+#' `init()` sets up the initial environment to be used by the methanogenesis model.
+#' @param CH4.initial Concentration of initial dissolved CH4, in molarity.
+#' @param K.CH4 Henry's constant for CH4.
+#' @param H2.initial Concentration of initial dissolved H2, in molarity.
+#' @param K.H2 Henry's constant for H2.
+#' @param DIC.initial Concentration of initial dissolved inorganic carbon, in molarity.
+#' @param pH.initial initial pH.
+#' @param K.CO2 Henry's constant for CH4.
+#' @param standard.gibbs Standard Gibbs free energy for the reaction,
+#' @param temperature Temperature of the system, in Kelvin.
+#' @param VolumeSolution Volume of liquid in the closed system, in liters.
+#' @param VolumeHeadspace Volume of gaseous headspace in the closed system, in liters.
+#' @param K.CO2HCO3 Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.
+#' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.
+#' @return A data frame to be used for the methanogenesis function
 init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
                  DIC.initial, pH.initial, K.CO2, standard.gibbs,
                  temperature, VolumeSolution, VolumeHeadspace, K.CO2HCO3 = 5.223196e-07,K.HCO3CO3 = 6.01886e-11){
@@ -50,17 +67,30 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #'
 #' `methanogenesis()` calculates CH4 produced, H2 consumed, CO2 consumed, and Gibbs free energy changes as dissolved inorganic carbon is consumed.
 #'
-#' @param CH4.initial Concentration of initial dissolved CH4.
+#' `init()` sets up the initial environment to be used by the methanogenesis model.
+#' @param CH4.initial Concentration of initial dissolved CH4, in molarity.
 #' @param K.CH4 Henry's constant for CH4.
-#' @param H2.initial Concentration of initial dissolved H2.
+#' @param H2.initial Concentration of initial dissolved H2, in molarity.
 #' @param K.H2 Henry's constant for H2.
-#' @return Data frame for reaction results.
-#' @export
+#' @param DIC.initial Concentration of initial dissolved inorganic carbon, in molarity.
+#' @param pH.initial initial pH.
+#' @param K.CO2 Henry's constant for CH4.
+#' @param standard.gibbs Standard Gibbs free energy for the reaction,
+#' @param temperature Temperature of the system, in Kelvin.
+#' @param VolumeSolution Volume of liquid in the closed system, in liters.
+#' @param VolumeHeadspace Volume of gaseous headspace in the closed system, in liters.
+#' @param K.CO2HCO3 Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.
+#' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.
+#' @param delta.DIC step size, in millimolar. 0.1 mM by default.
+#' @return A data frame of the model results
 #' @examples
 #' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
+#'
+#' @export
 methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K.H2=0.000666251556662516,
-                           DIC.initial, pH.initial, K.CO2=0.023464592, K.CO2HCO3 = 5.223196e-07, K.HCO3CO3 = 6.01886e-11, standard.gibbs,
-                           temperature, VolumeSolution, VolumeHeadspace, delta.DIC){
+                           DIC.initial, pH.initial, K.CO2=0.023464592, standard.gibbs=-191359.46584, temperature,
+                           VolumeSolution, VolumeHeadspace, K.CO2HCO3 = 5.223196e-07, K.HCO3CO3 = 6.01886e-11,
+                           delta.DIC=0.0001){
   # CH4.initial = 0.000001
   # K.CH4 = 0.001128969
   # H2.initial = 0.0005
