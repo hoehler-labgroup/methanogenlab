@@ -13,6 +13,8 @@ Imports:
     microbialkitchen,
 	CHNOSZ,	
     mathjaxr
+Remotes:
+    KopfLab/microbialkitchen
 RdMacros: 
     mathjaxr
 License: What license is it under?
