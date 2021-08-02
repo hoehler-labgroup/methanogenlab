@@ -10,6 +10,8 @@ Authors@R: c(
 Description: Evolves a closed system 
     undergoing methanogenesis.
 Imports: 
+    microbialkitchen,
+	CHNOSZ,	
     mathjaxr
 RdMacros: 
     mathjaxr
