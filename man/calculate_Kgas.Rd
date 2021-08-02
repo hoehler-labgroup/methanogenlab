@@ -12,5 +12,5 @@ calculate_Kgas(bunsen, molar.vol.gas)
 \item{molar.vol.gas}{The moles per unit volume of gas.}
 }
 \description{
-`calculate_Kgas` uses the provided Bunsen coefficient and moles per volume of gas to calculate Henry's constant.
+`calculate_Kgas()` uses the provided Bunsen coefficient and moles per volume of gas to calculate Henry's constant.
 }

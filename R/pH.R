@@ -1,6 +1,18 @@
+#' Calculates pH of the solution
+#'
+#' `pH()` Uses the calculate_closed_system_pH function from Sebastian Kopf's microbialkitchen R package to calculate pH.
+#'
+#' @param nDIC Moles of dissolved inorganic carbon.
+#' @param VolumeSolution Volume of liquid in the closed system, in liters.
+#' @param VolumeHeadspace Volume of gaseous headspace in the closed system, in liters.
+#' @param temperature Temperature of the system, in Kelvin.
+#' @param alkalinity initial alkalinity of the system, in millimolar.
+#' @param K.CO2HCO3 Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.
+#' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.
+#' @return pH of the solution.
 
 pH <- function(nDIC, VolumeSolution, VolumeHeadspace, temperature, alkalinity, K.CO2HCO3 = 5.223196e-07, K.HCO3CO3 = 6.01886e-11){
-  
+
   systempH <- as.numeric(calculate_closed_system_pH(
     TIC = qty(nDIC, "mol"),
     V_liquid = qty(VolumeSolution, "L"),
@@ -14,6 +26,6 @@ pH <- function(nDIC, VolumeSolution, VolumeHeadspace, temperature, alkalinity, K
     buffer_pKa = 0,
     alkalinity = qty(alkalinity, "mM")
   ))
-  
+
   return(systempH)
 }

@@ -18,7 +18,7 @@ calculate_KH(reactants, moles, phases, temperature, pressure)
 \item{pressure}{The pressure of the system, in atm.}
 }
 \description{
-`calculate_KH` utilizes the subcrt function from Jeffrey Dick's CHNOSZ R package to calculate equilibrium constants.
+`calculate_KH()` utilizes the subcrt function from Jeffrey Dick's CHNOSZ R package to calculate equilibrium constants.
 }
 \details{
 For the following chemical equilibrium:

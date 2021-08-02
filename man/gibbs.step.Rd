@@ -14,6 +14,6 @@ gibbs.step(standard.gibbs, Q, temperature)
 \item{temperature}{Temperature of the system, in Kelvin.}
 }
 \description{
-`gibbs.step` calculates the Gibbs free energy at each step in the
+`gibbs.step()` calculates the Gibbs free energy at each step in the
 model for a given Q and standard Gibbs free energy.
 }

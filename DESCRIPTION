@@ -1,15 +1,18 @@
 Package: Methanogen
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Methanogenesis Model
 Version: 0.1.1
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
+Authors@R: c(
+    person("Alta", "Howells", "alta.howells@gmail.com", role="aut")
+    person("Kylie", "Akiyama", "kylie.akiyama@berkeley.edu",  role="aut"),
+    person("Dylan", "Mankel", "dmankel@seti.org", role="aut")
+Maintainer: Alta Howells <alta.howells@gmail.com> and Dylan Mankel <dmankel@seti.org>
+Description: Evolves a closed system 
+    undergoing methanogenesis.
 Imports: 
-	mathjaxr
+    mathjaxr
 RdMacros: 
-	mathjaxr
+    mathjaxr
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true

@@ -1,6 +1,6 @@
 #'Calculates Gibbs free energy
 #'
-#' `gibbs.step` calculates the Gibbs free energy at each step in the
+#' `gibbs.step()` calculates the Gibbs free energy at each step in the
 #' model for a given Q and standard Gibbs free energy.
 #' @param standard.gibbs The standard Gibbs free energy of formation of the reaction in J/mol
 #' @param Q Current reaction quotient
