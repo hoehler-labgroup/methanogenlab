@@ -3,9 +3,10 @@ Type: Package
 Title: Methanogenesis Model
 Version: 0.1.1
 Authors@R: c(
-    person("Alta", "Howells", "alta.howells@gmail.com", role="aut")
+    person("Alta", "Howells", "alta.howells@gmail.com", role="aut"),
     person("Kylie", "Akiyama", "kylie.akiyama@berkeley.edu",  role="aut"),
     person("Dylan", "Mankel", "dmankel@seti.org", role="aut")
+	)
 Maintainer: Alta Howells <alta.howells@gmail.com> and Dylan Mankel <dmankel@seti.org>
 Description: Evolves a closed system 
     undergoing methanogenesis.
