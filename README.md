@@ -5,7 +5,7 @@
 
 <!-- badges: start -->
 
-[![Git\_Hub\_Version](https://img.shields.io/github/r-package/v/mankeldy/Methanogen_package)](/commits)
+[![Git\_Hub\_Version](https://img.shields.io/github/r-package/v/mankeldy/Methanogen_package?label=Github&logo=Github)](/commits)
 <!-- badges: end -->
 
 ## About
