@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 # Methanogen
 
 <!-- badges: start -->
-[![Git_Hub_Version](https://img.shields.io/badge/GitHub-`r version`-orange.svg?style=flat-square)](/commits)
+[![Git_Hub_Version](https://img.shields.io/github/r-package/v/mankeldy/Methanogen_package)](/commits)
 <!-- badges: end -->
 
 ## About
