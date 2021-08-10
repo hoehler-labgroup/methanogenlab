@@ -82,6 +82,8 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #' @param K.CO2HCO3 Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.
 #' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.
 #' @param delta.DIC step size, in millimolar. 0.1 mM by default.
+#' @param biomass.yield mass of dry biomass produced per mol of product. 2.4 g/mol product.
+#' @param carbon.fraction w/w percent C of biomass, expressed as a decimal. 0.44 by default.
 #' @return A data frame of the model results
 #' @examples
 #' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
@@ -90,7 +92,7 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K.H2=0.000666251556662516,
                            DIC.initial, pH.initial, K.CO2=0.023464592, standard.gibbs=-191359.46584, temperature,
                            VolumeSolution, VolumeHeadspace, K.CO2HCO3 = 5.223196e-07, K.HCO3CO3 = 6.01886e-11,
-                           delta.DIC=0.0001){
+                           delta.DIC=0.0001, biomass.yield=2.4,carbon.fraction=0.44){
   # CH4.initial = 0.000001
   # K.CH4 = 0.001128969
   # H2.initial = 0.0005
@@ -146,13 +148,16 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
 
   main$Gibbs.free.energy.step[1] <- init$Gibbs.free.energy.initial
 
+  CH4.per.step <- CH4.coefficient(biomass.yield,carbon.fraction)
+  H2.per.step <- H2.coefficient(biomass.yield,carbon.fraction)
+
 
   for (i in 2:total.steps){
 
     main <- rbind(main, NA)
     main$DIC.consumed[i] <- main$DIC.consumed[i-1]+delta.DIC
-    main$CH4.produced[i] <- main$CH4.produced[i-1]+0.919*delta.DIC
-    main$H2.consumed[i] <- main$H2.consumed[i-1]+3.84*delta.DIC
+    main$CH4.produced[i] <- main$CH4.produced[i-1]+CH4.per.step*delta.DIC
+    main$H2.consumed[i] <- main$H2.consumed[i-1]+H2.per.step*delta.DIC
 
     main$nDIC.consumed[i] <- main$DIC.consumed[i]*VolumeSolution
     main$nCH4.produced[i] <- main$CH4.produced[i]*VolumeSolution

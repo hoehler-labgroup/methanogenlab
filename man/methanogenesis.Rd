@@ -18,7 +18,9 @@ methanogenesis(
   VolumeHeadspace,
   K.CO2HCO3 = 5.223196e-07,
   K.HCO3CO3 = 6.01886e-11,
-  delta.DIC = 1e-04
+  delta.DIC = 1e-04,
+  biomass.yield = 2.4,
+  carbon.fraction = 0.44
 )
 }
 \arguments{
@@ -47,6 +49,10 @@ methanogenesis(
 \item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.}
 
 \item{delta.DIC}{step size, in millimolar. 0.1 mM by default.}
+
+\item{biomass.yield}{mass of dry biomass produced per mol of product. 2.4 g/mol product.}
+
+\item{carbon.fraction}{w/w percent C of biomass, expressed as a decimal. 0.44 by default.}
 
 \item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.}
 }
