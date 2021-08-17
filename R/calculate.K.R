@@ -4,7 +4,8 @@
 #' @param bunsen The Bunsen coefficient for the gas.
 #' @param molar.vol.gas The moles per unit volume of gas.
 #' @export
-calculate.Kgas <- function(bunsen, molar.vol.gas){
+calculate.Kgas <- function(bunsen,T,P){
+  molar.vol.gas <- 0.082057366*T/P
   Kgas <- bunsen / molar.vol.gas
   return(Kgas)
 }
@@ -28,7 +29,7 @@ calculate.Kgas <- function(bunsen, molar.vol.gas){
 #'
 #' @export
 calculate.KH <- function(reactants, moles, phases, temperature, pressure){
-  KH = 10^(as.numeric(subcrt(reactants,moles,phases,T= (temperature-273.15),P=pressure*1.01325)[[2]][4:4]))
+  KH = 10^(as.numeric(subcrt(reactants,moles,phases,T= (temperature-273.15),P=pressure*1.01325$out$logK))
   return(KH)
 }
 

@@ -6,6 +6,6 @@
 #' @param Q Current reaction quotient
 #' @param temperature Temperature of the system, in Kelvin.
 gibbs.step <- function(standard.gibbs, Q, temperature){
-  Gibbs.step <- (standard.gibbs + 8.314 * temperature * log(Q)) / 1000
+  Gibbs.step <- (standard.gibbs + 8.314462 * temperature * log(Q)) / 1000
   return(Gibbs.step)
 }

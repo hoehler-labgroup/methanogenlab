@@ -19,3 +19,15 @@ devtools package.
 # install.packages("devtools")
 devtools::install_github("mankeldy/Methanogen_Package")
 ```
+
+------------------------------------------------------------------------
+
+## Interactive plot
+
+`python interactive methanogenesis.py` ![GUI](?raw=true)
+
+### Additional Requirements (if using the IPython Console, use !pip instead)
+
+-   Rpy2 : `pip install rpy2`
+-   PyQt5 : `pip install pyqt5`
+-   PyQtGraph : `pip install pyqtgraph`
