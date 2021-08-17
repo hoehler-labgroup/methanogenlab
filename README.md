@@ -24,7 +24,8 @@ devtools::install_github("mankeldy/Methanogen_Package")
 
 ## Interactive plot
 
-`python interactive methanogenesis.py` ![GUI](?raw=true)
+`python interactive methanogenesis.py`
+![GUI](https://github.com/mankeldy/Methanogen_Package/blob/master/images/GUI.PNG?raw=true)
 
 ### Additional Requirements (if using the IPython Console, use !pip instead)
 
