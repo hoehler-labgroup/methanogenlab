@@ -122,7 +122,7 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
   #make empty data frame
   columns <- c("DIC.consumed", "nDIC.consumed","CH4.produced", "nCH4.produced","H2.consumed", "nH2.consumed",
                "nCH4.total.step", "PCH4.step", "[CH4].step",  "nH2.total.step", "PH2.step", "[H2].step",
-               "nDIC.total.step", "[DIC].step","PCO2.step", "[CO2].step","systempH.step","Gibbs.free.energy.step")
+               "nDIC.total.step", "[DIC].step","PCO2.step", "[CO2].step","systempH.step","Gibbs.free.energy.step","[H2]/[CO2] ratio","[H2]/[DIC] ratio")
 
   main <- setNames(data.frame(matrix(ncol = length(columns), nrow = 1)), columns)
 
@@ -203,6 +203,7 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
     main$Gibbs.free.energy.step[i] <- gibbs.step(standard.gibbs, Q.step, temperature)
 
   }
-
+  main$`log([H2]/[CO2] ratio)` <- log10(main$`[H2]/[CO2] ratio`)
+  main$`log([H2]/[DIC] ratio)` <- log10(main$`[H2]/[DIC] ratio`)
   return(main)
 }
