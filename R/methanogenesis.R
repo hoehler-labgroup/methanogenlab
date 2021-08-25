@@ -17,7 +17,7 @@
 #' @return A data frame to be used for the methanogenesis function
 init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
                  DIC.initial, pH.initial, K.CO2, standard.gibbs,
-                 temperature, VolumeSolution, VolumeHeadspace, K.CO2HCO3 = 5.223196e-07,K.HCO3CO3 = 6.01886e-11){
+                 temperature, VolumeSolution, VolumeHeadspace, biomass.yield,carbon.fraction,K.CO2HCO3 = 5.223196e-07,K.HCO3CO3 = 6.01886e-11){
 
   # CH4.initial = 0.000001
   # K.CH4 = 0.001128969
@@ -52,6 +52,13 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
   PCO2.initial <- PCO2(system.pH, nDIC, VolumeSolution, VolumeHeadspace, temperature,K.CO2HCO3, K.HCO3CO3)
   CO2.initial <- aqueous.step(PCO2.initial, K.CO2)
 
+  #yield coefficients
+  CH4.per.step <- CH4.coefficient(biomass.yield,carbon.fraction)
+  H2.per.step <- H2.coefficient(biomass.yield,carbon.fraction)
+
+  #ratios
+  H2.CO2.ratio.initial<- (H2.initial/H2.per.step)/CO2.initial
+  H2.DIC.ratio.initial <- (H2.initial/H2.per.step)/DIC.initial
   #Gibbs free energy initials
   Q.initial <- CH4.initial/((H2.initial^4)*CO2.initial)
   Gibbs.free.energy.initial <- gibbs.step(standard.gibbs,Q.initial,temperature)
@@ -59,8 +66,7 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
   init_frame <- data.frame(CH4.initial, nCH4.solution, PCH4.initial, nCH4.headspace.initial, nCH4.total.initial,
                            H2.initial, nH2.solution, PH2.initial, nH2.headspace.initial, nH2.total.initial,
                            DIC.initial, nDIC, PCO2.initial, CO2.initial, alkalinity.initial,
-                           pH.initial,Gibbs.free.energy.initial)
-
+                           pH.initial,Gibbs.free.energy.initial,CH4.per.step,H2.per.step,H2.CO2.ratio.initial,H2.DIC.ratio.initial)
   return(init_frame)
 }
 #' Steps through DIC consumption during a methanogenesis reaction
@@ -111,7 +117,7 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
   #make init data frame
   init <- init(CH4.initial, K.CH4, H2.initial, K.H2,
                DIC.initial, pH.initial, K.CO2, standard.gibbs,
-               temperature, VolumeSolution, VolumeHeadspace)
+               temperature, VolumeSolution, VolumeHeadspace,biomass.yield,carbon.fraction)
 
   #make empty data frame
   columns <- c("DIC.consumed", "nDIC.consumed","CH4.produced", "nCH4.produced","H2.consumed", "nH2.consumed",
@@ -148,11 +154,11 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
 
   main$Gibbs.free.energy.step[1] <- init$Gibbs.free.energy.initial
 
-  CH4.per.step <- CH4.coefficient(biomass.yield,carbon.fraction)
-  H2.per.step <- H2.coefficient(biomass.yield,carbon.fraction)
+  CH4.per.step <- init$CH4.per.step
+  H2.per.step <- init$H2.per.step
 
-  main$`[H2]/[CO2] ratio`[1] <- 1
-  main$`[H2]/[DIC] ratio`[1] <- 1
+  main$`[H2]/[CO2] ratio`[1] <- init$H2.CO2.ratio.initial
+  main$`[H2]/[DIC] ratio`[1] <- init$H2.DIC.ratio.initial
 
   for (i in 2:total.steps){
 
@@ -190,8 +196,8 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
 
     main$`[CO2].step`[i] <- aqueous.step(main$PCO2.step[i], K.CO2)
 
-    main$`[H2]/[CO2] ratio`[i] <- log10((main$`[H2].step`[i]/H2.per.step)/main$`[CO2].step`[i])
-    main$`[H2]/[DIC] ratio`[i] <- log10((main$`[H2].step`[i]/H2.per.step)/main$`[DIC].step`[i])
+    main$`[H2]/[CO2] ratio`[i] <- (main$`[H2].step`[i]/H2.per.step)/main$`[CO2].step`[i]
+    main$`[H2]/[DIC] ratio`[i] <- (main$`[H2].step`[i]/H2.per.step)/main$`[DIC].step`[i]
 
     Q.step <- main$`[CH4].step`[i] / (main$`[H2].step`[i]^4 * main$`[CO2].step`[i])
     main$Gibbs.free.energy.step[i] <- gibbs.step(standard.gibbs, Q.step, temperature)
