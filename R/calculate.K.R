@@ -29,7 +29,7 @@ calculate.Kgas <- function(bunsen,T,P){
 #'
 #' @export
 calculate.KH <- function(reactants, moles, phases, temperature, pressure){
-  KH = 10^(as.numeric(subcrt(reactants,moles,phases,T= (temperature-273.15),P=pressure*1.01325$out$logK))
+  KH = 10^(as.numeric(subcrt(reactants,moles,phases,T= (temperature-273.15),P=pressure*1.01325)$out$logK))
   return(KH)
 }
 

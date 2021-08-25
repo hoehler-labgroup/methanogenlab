@@ -151,6 +151,8 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
   CH4.per.step <- CH4.coefficient(biomass.yield,carbon.fraction)
   H2.per.step <- H2.coefficient(biomass.yield,carbon.fraction)
 
+  main$`[H2]/[CO2] ratio`[1] <- 0
+  main$`[H2]/[DIC] ratio`[1] <- 0
 
   for (i in 2:total.steps){
 
@@ -180,10 +182,16 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
 
     }
 
+
+
+
     main$systempH.step[i] <- pH(main$nDIC.total.step[i], VolumeSolution, VolumeHeadspace, temperature, init$alkalinity.initial)
     main$PCO2.step[i] <- PCO2(main$systempH.step[i], main$nDIC.total.step[i], VolumeSolution, VolumeHeadspace, temperature,K.CO2HCO3, K.HCO3CO3)
 
     main$`[CO2].step`[i] <- aqueous.step(main$PCO2.step[i], K.CO2)
+
+    main$`[H2]/[CO2] ratio`[i] <- (main$`[H2].step`[i]/H2.per.step)/main$`[CO2].step`[i]
+    main$`[H2]/[DIC] ratio`[i] <- (main$`[H2].step`[i]/H2.per.step)/main$`[DIC].step`[i]
 
     Q.step <- main$`[CH4].step`[i] / (main$`[H2].step`[i]^4 * main$`[CO2].step`[i])
     main$Gibbs.free.energy.step[i] <- gibbs.step(standard.gibbs, Q.step, temperature)
