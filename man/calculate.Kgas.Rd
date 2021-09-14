@@ -4,7 +4,7 @@
 \alias{calculate.Kgas}
 \title{Calculates Henry's constant for a gas}
 \usage{
-calculate.Kgas(bunsen, molar.vol.gas)
+calculate.Kgas(bunsen, T, P)
 }
 \arguments{
 \item{bunsen}{The Bunsen coefficient for the gas.}

@@ -16,8 +16,10 @@ init(
   temperature,
   VolumeSolution,
   VolumeHeadspace,
-  K.CO2HCO3 = 5.223196e-07,
-  K.HCO3CO3 = 6.01886e-11
+  biomass.yield,
+  carbon.fraction,
+  K.CO2HCO3,
+  K.HCO3CO3
 )
 }
 \arguments{

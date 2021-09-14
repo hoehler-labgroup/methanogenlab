@@ -6,18 +6,18 @@
 \usage{
 methanogenesis(
   CH4.initial,
-  K.CH4 = 0.00112896948941469,
+  K.CH4 = NA,
   H2.initial,
-  K.H2 = 0.000666251556662516,
+  K.H2 = NA,
   DIC.initial,
   pH.initial,
-  K.CO2 = 0.023464592,
+  K.CO2 = NA,
   standard.gibbs = -191359.46584,
   temperature,
   VolumeSolution,
   VolumeHeadspace,
-  K.CO2HCO3 = 5.223196e-07,
-  K.HCO3CO3 = 6.01886e-11,
+  K.CO2HCO3 = NA,
+  K.HCO3CO3 = NA,
   delta.DIC = 1e-04,
   biomass.yield = 2.4,
   carbon.fraction = 0.44

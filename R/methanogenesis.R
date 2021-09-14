@@ -17,7 +17,7 @@
 #' @return A data frame to be used for the methanogenesis function
 init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
                  DIC.initial, pH.initial, K.CO2, standard.gibbs,
-                 temperature, VolumeSolution, VolumeHeadspace, biomass.yield,carbon.fraction,K.CO2HCO3 = 5.223196e-07,K.HCO3CO3 = 6.01886e-11){
+                 temperature, VolumeSolution, VolumeHeadspace, biomass.yield,carbon.fraction,K.CO2HCO3,K.HCO3CO3){
 
   # CH4.initial = 0.000001
   # K.CH4 = 0.001128969
@@ -69,6 +69,7 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
                            pH.initial,Gibbs.free.energy.initial,CH4.per.step,H2.per.step,H2.CO2.ratio.initial,H2.DIC.ratio.initial)
   return(init_frame)
 }
+
 #' Steps through DIC consumption during a methanogenesis reaction
 #'
 #' `methanogenesis()` calculates CH4 produced, H2 consumed, CO2 consumed, and Gibbs free energy changes as dissolved inorganic carbon is consumed.
@@ -95,29 +96,37 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
 #'
 #' @export
-methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K.H2=0.000666251556662516,
-                           DIC.initial, pH.initial, K.CO2=0.023464592, standard.gibbs=-191359.46584, temperature,
-                           VolumeSolution, VolumeHeadspace, K.CO2HCO3 = 5.223196e-07, K.HCO3CO3 = 6.01886e-11,
+methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
+                           DIC.initial, pH.initial, K.CO2=NA, standard.gibbs=-191359.46584, temperature,
+                           VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NA, K.HCO3CO3 = NA,
                            delta.DIC=0.0001, biomass.yield=2.4,carbon.fraction=0.44){
-  # CH4.initial = 0.000001
-  # K.CH4 = 0.001128969
-  # H2.initial = 0.0005
-  # K.H2 = 0.000666252
-  # DIC.initial = 0.0032
-  # pH.initial = 7.5
-  # K.CO2 = 0.023464592
-  # standard.gibbs = -45736.01
-  # temperature = 313.15
-  # VolumeSolution = 0.08
-  # VolumeHeadspace = 0.02
-  # delta.DIC = 0.0001
+
+  if (is.na(K.CH4)){
+    K.CH4 <- calculate.KH(c("CH4","CH4"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
+  }
+
+  if (is.na(K.H2)){
+    K.H2 <- calculate.KH(c("H2","H2"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
+  }
+
+  if (is.na(K.CO2)){
+    K.CO2 <- calculate.KH(c("CO2","CO2"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
+  }
+
+  if (is.na(K.CO2HCO3)){
+    K.CO2HCO3 <- calculate.KH(c("CO2","H2O","HCO3-","H+"),c(-1,-1,1,1),c("aq","l","aq","aq"), temperature = temperature,pressure = 1)
+  }
+
+  if (is.na(K.HCO3CO3)){
+    K.HCO3CO3 <- calculate.KH(c("HCO3-","CO3-2","H+"),c(-1,1,1),c("aq","aq","aq"), temperature = temperature,pressure = 1)
+  }
 
   total.steps <- DIC.initial/delta.DIC #Runs until all DIC has been consumed and returns all the model output
 
   #make init data frame
   init <- init(CH4.initial, K.CH4, H2.initial, K.H2,
                DIC.initial, pH.initial, K.CO2, standard.gibbs,
-               temperature, VolumeSolution, VolumeHeadspace,biomass.yield,carbon.fraction)
+               temperature, VolumeSolution, VolumeHeadspace,biomass.yield,carbon.fraction,K.CO2HCO3,K.HCO3CO3)
 
   #make empty data frame
   columns <- c("DIC.consumed", "nDIC.consumed","CH4.produced", "nCH4.produced","H2.consumed", "nH2.consumed",
@@ -160,6 +169,7 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
   main$`[H2]/[CO2] ratio`[1] <- init$H2.CO2.ratio.initial
   main$`[H2]/[DIC] ratio`[1] <- init$H2.DIC.ratio.initial
 
+  percent.change.list <- c("PCH4.step","[CH4].step","PH2.step","[H2].step","[DIC].step","PCO2.step","[CO2].step","systempH.step","Gibbs.free.energy.step")
   for (i in 2:total.steps){
 
     main <- rbind(main, NA)
@@ -188,9 +198,6 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
 
     }
 
-
-
-
     main$systempH.step[i] <- pH(main$nDIC.total.step[i], VolumeSolution, VolumeHeadspace, temperature, init$alkalinity.initial)
     main$PCO2.step[i] <- PCO2(main$systempH.step[i], main$nDIC.total.step[i], VolumeSolution, VolumeHeadspace, temperature,K.CO2HCO3, K.HCO3CO3)
 
@@ -205,5 +212,13 @@ methanogenesis <- function(CH4.initial, K.CH4=0.00112896948941469, H2.initial, K
   }
   main$`log([H2]/[CO2] ratio)` <- log10(main$`[H2]/[CO2] ratio`)
   main$`log([H2]/[DIC] ratio)` <- log10(main$`[H2]/[DIC] ratio`)
+
+  for (column in percent.change.list){
+    percent.change <- ((main[[column]]-lag(main[[column]]))/lag(main[[column]]))*100
+    column.name <- sprintf("percent.change %s",column)
+    main <- cbind(main,percent.change)
+    colnames(main)[colnames(main)=="percent.change"] <- column.name
+  }
+
   return(main)
 }
