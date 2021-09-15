@@ -87,13 +87,15 @@ methanogenesis <- function(CH4.initial, K.CH4=NULL, H2.initial, K.H2=NULL,
                            DIC.initial, pH.initial, K.CO2=NULL, standard.gibbs=-191359.46584, temperature,
                            VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NULL, K.HCO3CO3 = NULL,
                            delta.DIC=0.0001, biomass.yield=2.4,carbon.fraction=0.44){
-
+  print('were in')
   #Calculates Henry's constants if they aren't already provided
   if (is.null(K.CH4)){
+    print('calculating kch4')
     K.CH4 <- calculate.KH(c("CH4","CH4"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
   }
 
   if (is.null(K.H2)){
+    print('calculating kh2')
     K.H2 <- calculate.KH(c("H2","H2"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
   }
 
