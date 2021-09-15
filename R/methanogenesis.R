@@ -83,31 +83,30 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
 #'
 #' @export
-methanogenesis <- function(CH4.initial, K.CH4=NULL, H2.initial, K.H2=NULL,
-                           DIC.initial, pH.initial, K.CO2=NULL, standard.gibbs=-191359.46584, temperature,
-                           VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NULL, K.HCO3CO3 = NULL,
+methanogenesis <- function(CH4.initial, K.CH4=NaN, H2.initial, K.H2=NaN,
+                           DIC.initial, pH.initial, K.CO2=NaN, standard.gibbs=-191359.46584, temperature,
+                           VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NaN, K.HCO3CO3 = NaN,
                            delta.DIC=0.0001, biomass.yield=2.4,carbon.fraction=0.44){
-  print('were in')
+
   #Calculates Henry's constants if they aren't already provided
-  if (is.null(K.CH4)){
-    print('calculating kch4')
+  if (is.nan(K.CH4)){
     K.CH4 <- calculate.KH(c("CH4","CH4"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
   }
 
-  if (is.null(K.H2)){
+  if (is.nan(K.H2)){
     print('calculating kh2')
     K.H2 <- calculate.KH(c("H2","H2"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
   }
 
-  if (is.null(K.CO2)){
+  if (is.nan(K.CO2)){
     K.CO2 <- calculate.KH(c("CO2","CO2"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
   }
 
-  if (is.null(K.CO2HCO3)){
+  if (is.nan(K.CO2HCO3)){
     K.CO2HCO3 <- calculate.KH(c("CO2","H2O","HCO3-","H+"),c(-1,-1,1,1),c("aq","l","aq","aq"), temperature = temperature,pressure = 1)
   }
 
-  if (is.null(K.HCO3CO3)){
+  if (is.nan(K.HCO3CO3)){
     K.HCO3CO3 <- calculate.KH(c("HCO3-","CO3-2","H+"),c(-1,1,1),c("aq","aq","aq"), temperature = temperature,pressure = 1)
   }
 
