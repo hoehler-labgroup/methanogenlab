@@ -90,8 +90,10 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2='NA',
 
   #Calculates Henry's constants if they aren't already provided
   if (is.na(K.CH4)){
+    print('before')
     K.CH4 <- calculate.KH(c("CH4","CH4"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
-  }
+    print('after')
+    }
 
   if (K.H2=='NA'){
     print('calculating kh2')
