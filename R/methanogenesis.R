@@ -17,7 +17,8 @@
 #' @return A data frame to be used for the methanogenesis function.
 init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
                  DIC.initial, pH.initial, K.CO2, standard.gibbs,
-                 temperature, VolumeSolution, VolumeHeadspace, biomass.yield,carbon.fraction,K.CO2HCO3,K.HCO3CO3){
+                 temperature, VolumeSolution, VolumeHeadspace,inoculum.cell.number,
+                 biomass.yield,carbon.fraction,cell.weight,K.CO2HCO3,K.HCO3CO3){
 
   #CH4 initials
   nCH4.solution <- CH4.initial * VolumeSolution
@@ -50,10 +51,17 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
   Q.initial <- CH4.initial/((H2.initial^4)*CO2.initial)
   Gibbs.free.energy.initial <- gibbs.step(standard.gibbs,Q.initial,temperature)
 
+  #biomass
+  g.biomass.per.nDIC <- biomass.coefficient(biomass.yield,carbon.fraction)*12.0107/carbon.fraction
+  initial.cell.number <- inoculum.cell.number
+  initial.g.biomass <- initial.cell.number*cell.weight
+  initial.cell.per.mL <- initial.cell.number/(VolumeSolution*1e3)
+
   init_frame <- data.frame(CH4.initial, nCH4.solution, PCH4.initial, nCH4.headspace.initial, nCH4.total.initial,
                            H2.initial, nH2.solution, PH2.initial, nH2.headspace.initial, nH2.total.initial,
                            DIC.initial, nDIC, PCO2.initial, CO2.initial, alkalinity.initial,
-                           pH.initial,Gibbs.free.energy.initial,CH4.per.step,H2.per.step,H2.CO2.ratio.initial,H2.DIC.ratio.initial)
+                           pH.initial,Gibbs.free.energy.initial,CH4.per.step,H2.per.step,H2.CO2.ratio.initial,H2.DIC.ratio.initial,g.biomass.per.nDIC,
+                           initial.cell.number,initial.g.biomass,initial.cell.per.mL)
   return(init_frame)
 }
 
@@ -86,7 +94,7 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
                            DIC.initial, pH.initial, K.CO2=NA, standard.gibbs=-191359.46584, temperature,
                            VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NA, K.HCO3CO3 = NA,
-                           delta.DIC=0.0001, biomass.yield=2.4,carbon.fraction=0.44){
+                           delta.DIC=0.0001, inoculum.cell.number = 1,biomass.yield=2.4,carbon.fraction=0.44,cell.weight=30e-15){
 
   #Calculates Henry's constants if they aren't already provided
   if (is.na(K.CH4)){
@@ -114,7 +122,8 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
   #make init data frame
   init <- init(CH4.initial, K.CH4, H2.initial, K.H2,
                DIC.initial, pH.initial, K.CO2, standard.gibbs,
-               temperature, VolumeSolution, VolumeHeadspace,biomass.yield,carbon.fraction,K.CO2HCO3,K.HCO3CO3)
+               temperature, VolumeSolution, VolumeHeadspace,inoculum.cell.number,
+               biomass.yield,carbon.fraction,cell.weight,K.CO2HCO3,K.HCO3CO3)
 
   #make empty data frame
   columns <- c("DIC.consumed", "nDIC.consumed","CH4.produced", "nCH4.produced","H2.consumed", "nH2.consumed",
@@ -154,10 +163,15 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
   CH4.per.step <- init$CH4.per.step
   H2.per.step <- init$H2.per.step
 
+  g.biomass.per.nDIC <- init$g.biomass.per.nDIC
+
+  main$g.biomass.step[1] <- init$initial.g.biomass
+  main$cell.number.step[1] <- init$initial.cell.number
+  main$cell.per.mL[1] <- init$initial.cell.per.mL
+
   main$`[H2]/[CO2] ratio`[1] <- init$H2.CO2.ratio.initial
   main$`[H2]/[DIC] ratio`[1] <- init$H2.DIC.ratio.initial
-
-  percent.change.list <- c("PCH4.step","[CH4].step","PH2.step","[H2].step","[DIC].step","PCO2.step","[CO2].step","systempH.step","Gibbs.free.energy.step")
+  percent.change.list <- c("PCH4.step","[CH4].step","PH2.step","[H2].step","[DIC].step","PCO2.step","[CO2].step","systempH.step","Gibbs.free.energy.step","cell.per.mL")
 
   for (i in 2:total.steps){
 
@@ -198,12 +212,19 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
     Q.step <- main$`[CH4].step`[i] / (main$`[H2].step`[i]^4 * main$`[CO2].step`[i])
     main$Gibbs.free.energy.step[i] <- gibbs.step(standard.gibbs, Q.step, temperature)
 
+    main$g.biomass.step[i] <- main$g.biomass.step[i-1]+delta.DIC*VolumeSolution*g.biomass.per.nDIC
+    main$cell.number.step[i] <- main$g.biomass.step[i]/cell.weight
+    main$cell.per.mL[i] <- main$cell.number.step[i]/(VolumeSolution*1e3)
+
   }
+
+
   main$`log([H2]/[CO2] ratio)` <- log10(main$`[H2]/[CO2] ratio`)
   main$`log([H2]/[DIC] ratio)` <- log10(main$`[H2]/[DIC] ratio`)
 
+
   for (column in percent.change.list){
-    percent.change <- ((main[[column]]-lag(main[[column]]))/lag(main[[column]]))*100
+    percent.change <- abs(((main[[column]]-lag(main[[column]]))/lag(main[[column]]))*100)
     column.name <- sprintf("percent.change %s",column)
     main <- cbind(main,percent.change)
     colnames(main)[colnames(main)=="percent.change"] <- column.name
