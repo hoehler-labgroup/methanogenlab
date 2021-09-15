@@ -17,7 +17,7 @@
 #' @return A data frame to be used for the methanogenesis function.
 init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
                  DIC.initial, pH.initial, K.CO2, standard.gibbs,
-                 temperature, VolumeSolution, VolumeHeadspace, biomass.yield,carbon.fraction,K.CO2HCO3,K.HCO3CO3){
+                 temperature, VolumeSolution, VolumeHeadspace, biomass_yield,carbon.fraction,K.CO2HCO3,K.HCO3CO3){
 
   #CH4 initials
   nCH4.solution <- CH4.initial * VolumeSolution
@@ -39,8 +39,8 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
   CO2.initial <- aqueous.step(PCO2.initial, K.CO2)
 
   #yield coefficients
-  CH4.per.step <- CH4.coefficient(biomass.yield,carbon.fraction)
-  H2.per.step <- H2.coefficient(biomass.yield,carbon.fraction)
+  CH4.per.step <- CH4.coefficient(biomass_yield,carbon.fraction)
+  H2.per.step <- H2.coefficient(biomass_yield,carbon.fraction)
 
   #ratios
   H2.CO2.ratio.initial<- (H2.initial/H2.per.step)/CO2.initial
@@ -76,17 +76,17 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #' @param K.CO2HCO3 Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). NA by default (calculated by CHNOSZ).
 #' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). NA by default (calculated by CHNOSZ).
 #' @param delta.DIC step size, in millimolar. 0.1 mM by default.
-#' @param biomass.yield mass of dry biomass produced per mol of product. 2.4 g/mol product by default.
+#' @param biomass_yield mass of dry biomass produced per mol of product. 2.4 g/mol product by default.
 #' @param carbon.fraction w/w percent C of biomass, expressed as a decimal. 0.44 by default.
 #' @return A data frame of the model results
 #' @examples
 #' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
 #'
 #' @export
-methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2='NA',
-                           DIC.initial, pH.initial, K.CO2='NA', standard.gibbs=-191359.46584, temperature,
-                           VolumeSolution, VolumeHeadspace, K.CO2HCO3 = 'NA', K.HCO3CO3 = 'NA',
-                           delta.DIC=0.0001, biomass.yield=2.4,carbon.fraction=0.44){
+methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
+                           DIC.initial, pH.initial, K.CO2=NA, standard.gibbs=-191359.46584, temperature,
+                           VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NA, K.HCO3CO3 = NA,
+                           delta.DIC=0.0001, biomass_yield=2.4,carbon.fraction=0.44){
 
   #Calculates Henry's constants if they aren't already provided
   if (is.na(K.CH4)){
@@ -117,7 +117,7 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2='NA',
   #make init data frame
   init <- init(CH4.initial, K.CH4, H2.initial, K.H2,
                DIC.initial, pH.initial, K.CO2, standard.gibbs,
-               temperature, VolumeSolution, VolumeHeadspace,biomass.yield,carbon.fraction,K.CO2HCO3,K.HCO3CO3)
+               temperature, VolumeSolution, VolumeHeadspace,biomass_yield,carbon.fraction,K.CO2HCO3,K.HCO3CO3)
 
   #make empty data frame
   columns <- c("DIC.consumed", "nDIC.consumed","CH4.produced", "nCH4.produced","H2.consumed", "nH2.consumed",
