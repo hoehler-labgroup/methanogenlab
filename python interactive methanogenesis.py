@@ -15,8 +15,8 @@ from rpy2.robjects.conversion import localconverter
 import pandas as pd
 
 
-devtools = importr('devtools')
-devtools.install_github('https://github.com/mankeldy/Methanogen_Package')
+#devtools = importr('devtools')
+#devtools.install_github('https://github.com/mankeldy/Methanogen_Package')
 stats = importr('stats')
 grdevices = importr('grDevices')
 base = importr('base')
@@ -63,9 +63,9 @@ def fac(CH4,H2,DIC,pH,temperature,volumesoln,volumehead):
     with localconverter(robjects.default_converter + pandas2ri.converter):
         pd_from_r_df = robjects.conversion.rpy2py(output)
     return pd_from_r_df
-print("before")
+
 names = list(fac(1,1,1,1,1,1,1).columns)
-print("after")
+
 def get_vals(function,y,**kwargs):
     
     run = function(**kwargs)
