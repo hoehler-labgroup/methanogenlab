@@ -7,11 +7,11 @@
 #' @param VolumeSolution Volume of liquid in the closed system, in liters.
 #' @param VolumeHeadspace Volume of gaseous headspace in the closed system, in liters.
 #' @param temperature Temperature of the system, in Kelvin.
-#' @param K.CO2HCO3 Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.
-#' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.
+#' @param K.CO2HCO3 Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq).
+#' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq).
 #' @return alkalinity of the solution, in millimolar.
 
-alkalinity <- function(pH, nDIC, VolumeSolution, VolumeHeadspace, temperature, K.CO2HCO3 = 5.223196e-07, K.HCO3CO3 = 6.01886e-11){
+alkalinity <- function(pH, nDIC, VolumeSolution, VolumeHeadspace, temperature, K.CO2HCO3, K.HCO3CO3){
 
   alkalinity <- as.numeric(scale_metric(calculate_closed_system_alkalinity(
     pH = pH,
