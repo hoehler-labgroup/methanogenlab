@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Aug 14 18:20:21 2021
-
-@author: dylan
-"""
-
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QApplication, QHBoxLayout,
                              QLabel, QSizePolicy, QSlider, QSpacerItem,
@@ -12,28 +5,25 @@ from PyQt5.QtWidgets import (QApplication, QHBoxLayout,
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 import pyqtgraph as pg
-
-
 import numpy as np
-
 import sys
-
-
 import rpy2.robjects as robjects
 from rpy2.robjects.packages import importr
 from rpy2.robjects import pandas2ri
-
 from rpy2.robjects.conversion import localconverter
 # Import pandas package 
 import pandas as pd
 
+
+devtools = importr('devtools')
+devtools.install_github('https://github.com/mankeldy/Methanogen_Package')
 stats = importr('stats')
 grdevices = importr('grDevices')
 base = importr('base')
 datasets = importr('datasets')
-methanogen = importr('Methanogen')
 CHNOSZ = importr('CHNOSZ')
 microbialkitchen=importr('microbialkitchen',on_conflict="warn")
+methanogen = importr('Methanogen')
 
 colors =  {
             'lightest':"#eeeeee",
@@ -56,28 +46,26 @@ QLabel{{
 }}
 """
 
+
 def fac(CH4,H2,DIC,pH,temperature,volumesoln,volumehead):
-    output = methanogen.methanogenesis(CH4*1e-6, 
-                                 0.00112896948941469,
-                                 H2*1e-3,
-                                 0.000666251556662516,
-                                 DIC*1e-3,
-                                 pH,
-                                 0.023464592,
-                                 -191359.46584,
-                                 273.15+temperature,
-                                 volumesoln*1e-3,
-                                 volumehead*1e-3,
-                                 5.223196e-07, 
-                                 6.01886e-11,
-                                 0.0001,
-                                 2.4,
-                                 0.44)
+    output = methanogen.methanogenesis(CH4_initial = CH4*1e-6,
+                                       H2_initial = 1e-3,
+                                       DIC_initial = DIC*1e-3,
+                                       pH_initial = pH,
+                                       standard_gibbs = -191359.46584,
+                                       temperature = temperature + 273.15,
+                                       VolumeSolution = volumesoln*1e-3,
+                                       VolumeHeadspace = volumehead*1e-3,
+                                       delta_DIC = 0.0001, 
+                                       biomass_yield = 2.4,
+                                       carbon_fraction=0.44)
+    
     with localconverter(robjects.default_converter + pandas2ri.converter):
         pd_from_r_df = robjects.conversion.rpy2py(output)
     return pd_from_r_df
-
+print("before")
 names = list(fac(1,1,1,1,1,1,1).columns)
+print("after")
 def get_vals(function,y,**kwargs):
     
     run = function(**kwargs)
