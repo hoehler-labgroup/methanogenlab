@@ -83,13 +83,13 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
 #'
 #' @export
-methanogenesis <- function(CH4.initial, K.CH4='NA', H2.initial, K.H2='NA',
+methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2='NA',
                            DIC.initial, pH.initial, K.CO2='NA', standard.gibbs=-191359.46584, temperature,
                            VolumeSolution, VolumeHeadspace, K.CO2HCO3 = 'NA', K.HCO3CO3 = 'NA',
                            delta.DIC=0.0001, biomass.yield=2.4,carbon.fraction=0.44){
 
   #Calculates Henry's constants if they aren't already provided
-  if (K.CH4=='NA'){
+  if (is.na(K.CH4)){
     K.CH4 <- calculate.KH(c("CH4","CH4"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
   }
 
