@@ -177,7 +177,7 @@ methanogenesis <- function(CH4.initial, K.CH4=NULL, H2.initial, K.H2=NULL,
     main$nH2.total.step[i] <- main$nH2.total.step[1]-main$nH2.consumed[i]
 
     main$PCH4.step[i] <- pressure.step(main$nCH4.total.step[i], K.CH4, VolumeSolution, VolumeHeadspace, temperature)
-    main$PH2.step[i] <- pressure.step(main$nH2.total.step[i], K.H2, VolumeSolution, VolumeHeadspace, temperature,K.CO2HCO3, K.HCO3CO3)
+    main$PH2.step[i] <- pressure.step(main$nH2.total.step[i], K.H2, VolumeSolution, VolumeHeadspace, temperature)
 
     main$`[DIC].step`[i] <- main$nDIC.total.step[i]/VolumeSolution
     main$`[CH4].step`[i] <- aqueous.step(main$PCH4.step[i], K.CH4)
