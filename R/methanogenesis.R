@@ -95,20 +95,20 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2='NA',
     print('after')
     }
 
-  if (K.H2=='NA'){
+  if (is.na(K.H2)){
     print('calculating kh2')
     K.H2 <- calculate.KH(c("H2","H2"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
   }
 
-  if (K.CO2=='NA'){
+  if (is.na(K.CO2)){
     K.CO2 <- calculate.KH(c("CO2","CO2"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
   }
 
-  if (K.CO2HCO3=='NA'){
+  if (is.na(K.CO2HCO3)){
     K.CO2HCO3 <- calculate.KH(c("CO2","H2O","HCO3-","H+"),c(-1,-1,1,1),c("aq","l","aq","aq"), temperature = temperature,pressure = 1)
   }
 
-  if (K.HCO3CO3=='NA'){
+  if (is.na(K.HCO3CO3)){
     K.HCO3CO3 <- calculate.KH(c("HCO3-","CO3-2","H+"),c(-1,1,1),c("aq","aq","aq"), temperature = temperature,pressure = 1)
   }
 
