@@ -87,11 +87,10 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
                            DIC.initial, pH.initial, K.CO2=NA, standard.gibbs=-191359.46584, temperature,
                            VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NA, K.HCO3CO3 = NA,
                            delta.DIC=0.0001, biomass.yield=2.4,carbon.fraction=0.44){
-  print('hi')
+
   #Calculates Henry's constants if they aren't already provided
   if (is.na(K.CH4)){
     K.CH4 <- calculate.KH(c("CH4","CH4"),c(-1,1),c("g","aq"),temperature = temperature,pressure = 1)
-    print('K.CH4')
     }
 
   if (is.na(K.H2)){
