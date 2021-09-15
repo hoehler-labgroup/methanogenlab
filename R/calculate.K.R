@@ -28,8 +28,9 @@ calculate.Kgas <- function(bunsen,T,P){
 #' calculate_KH(c("CO2","H2O","HCO3-","H+"),c(-1,-1,1,1),c("aq","l","aq","aq"), 273.15+37,1.7)
 #'
 #' @export
-calculate.KH <- function(reactants, moles, phases, temperature, pressure){
-  KH = 10**(as.numeric(subcrt(reactants,moles,phases,T= (temperature-273.15),P=pressure*1.01325)[[2]][4:4]))
+calculate.KH <- function(reactants1,reactants2, moles1,moles2,phases1, phases2, temperature, pressure){
+
+  KH = 10**(as.numeric(subcrt(c(reactants1,reactants2),c(moles1,moles2),c(phases1, phases2),T= (temperature-273.15),P=pressure*1.01325)$out$logK))
   return(KH)
 }
 
