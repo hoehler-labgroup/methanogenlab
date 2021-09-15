@@ -90,6 +90,7 @@ methanogenesis <- function(CH4.initial, H2.initial,
                            delta.DIC=0.0001, biomass.yield=2.4,carbon.fraction=0.44,
                            K.CH4=NA,K.H2=NA,K.CO2=NA,K.CO2HCO3 = NA,K.HCO3CO3 = NA){
   print('prior to if calculation')
+  print(c('CH4','CH4'))
   K.CH4 <- calculate.KH(c('CH4','CH4'),c(-1,1),c('g','aq'),temperature = temperature,pressure = 1)
   print('prior to if statement')
   #Calculates Henry's constants if they aren't already provided
