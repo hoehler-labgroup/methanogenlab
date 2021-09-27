@@ -224,7 +224,7 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
 
 
   for (column in percent.change.list){
-    percent.change <- abs(((main[[column]]-main[[1]])/main[[1]])*100)
+    percent.change <- abs(((main[[column]]-main[[column]][1])/main[[column]][1])*100)
     column.name <- sprintf("percent.change %s",column)
     main <- cbind(main,percent.change)
     colnames(main)[colnames(main)=="percent.change from initial"] <- column.name
