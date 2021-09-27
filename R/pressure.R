@@ -38,6 +38,6 @@ PCO2 <- function(pH, nDIC, VolumeSolution, VolumeHeadspace, temperature, K.CO2HC
 #' @return Partial pressure of the head space.
 #'
 pressure.step <- function(n.total.step, K, VolumeSolution, VolumeHeadspace, temperature){
-  P.step <- n.total.step / ((VolumeHeadspace / (0.082057366 * temperature)) + (K * VolumeSolution))
+  P.step <- n.total.step / ((VolumeHeadspace / (0.08206 * temperature)) + (K * VolumeSolution))
   return(P.step)
 }
