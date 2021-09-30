@@ -3,6 +3,7 @@
 export(calculate.KH)
 export(calculate.Kgas)
 export(methanogenesis)
+export(qty)
 import(CHNOSZ)
 import(dplyr)
 import(mathjaxr)

@@ -1,7 +1,7 @@
 #' Determines initial conditions from initial inputs
 #'
 #' `init()` sets up the initial environment to be used by the methanogenesis model.
-#' @param CH4.initial Concentration of initial dissolved CH4, in molarity.
+#' @inheritParams methanogenesis
 #' @param K.CH4 Henry's constant for CH4.
 #' @param H2.initial Concentration of initial dissolved H2, in molarity.
 #' @param K.H2 Henry's constant for H2.
@@ -86,6 +86,7 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #' @param delta.DIC step size, in millimolar. 0.1 mM by default.
 #' @param biomass.yield mass of dry biomass produced per mol of product. 2.4 g/mol product by default.
 #' @param carbon.fraction w/w percent C of biomass, expressed as a decimal. 0.44 by default.
+#' @param cell.weight a weight quantity, example: \code{cell_weight = qty(20, "fg")}
 #' @return A data frame of the model results
 #' @examples
 #' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
@@ -94,7 +95,13 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
                            DIC.initial, pH.initial, K.CO2=NA, standard.gibbs=-191359.46584, temperature,
                            VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NA, K.HCO3CO3 = NA,
-                           delta.DIC=0.0001, inoculum.cell.number = 1,biomass.yield=2.4,carbon.fraction=0.44,cell.weight=30e-15){
+                           delta.DIC=0.0001, inoculum.cell.number = 1,biomass.yield=2.4,carbon.fraction=0.44,cell.weight=qty(30, "fg")){
+
+  # safety checks for qty parameters
+  if(!microbialkitchen::is_mass(cell.weight)) stop("cell.weight must be a mass qty() like qty(30, 'fg')", call. = FALSE)
+
+  # convert quantities to specific units for downstream calculations
+  cell.weight <- microbialkitchen::get_qty_value(cell.weight, "g")
 
   #Calculates Henry's constants if they aren't already provided
   if (is.na(K.CH4)){
