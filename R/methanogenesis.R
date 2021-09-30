@@ -1,7 +1,7 @@
 #' Determines initial conditions from initial inputs
 #'
 #' `init()` sets up the initial environment to be used by the methanogenesis model.
-#' @param CH4.initial Concentration of initial dissolved CH4, in molarity.
+#' @inheritParams methanogenesis
 #' @param K.CH4 Henry's constant for CH4.
 #' @param H2.initial Concentration of initial dissolved H2, in molarity.
 #' @param K.H2 Henry's constant for H2.
