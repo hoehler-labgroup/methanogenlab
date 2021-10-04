@@ -10,8 +10,8 @@ PCO2(
   VolumeSolution,
   VolumeHeadspace,
   temperature,
-  K.CO2HCO3 = 5.223196e-07,
-  K.HCO3CO3 = 6.01886e-11
+  K.CO2HCO3,
+  K.HCO3CO3
 )
 }
 \arguments{
@@ -25,9 +25,9 @@ PCO2(
 
 \item{temperature}{Temperature of the system, in Kelvin.}
 
-\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.}
+\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq).}
 
-\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.}
+\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq).}
 }
 \value{
 CO2 pressure in the head space, in atm.

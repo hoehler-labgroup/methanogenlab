@@ -12,12 +12,13 @@ init(
   DIC.initial,
   pH.initial,
   K.CO2,
-  standard.gibbs,
   temperature,
   VolumeSolution,
   VolumeHeadspace,
+  inoculum.cell.number,
   biomass.yield,
   carbon.fraction,
+  cell.weight,
   K.CO2HCO3,
   K.HCO3CO3
 )
@@ -37,20 +38,18 @@ init(
 
 \item{K.CO2}{Henry's constant for CH4.}
 
-\item{standard.gibbs}{Standard Gibbs free energy for the reaction,}
-
 \item{temperature}{Temperature of the system, in Kelvin.}
 
 \item{VolumeSolution}{Volume of liquid in the closed system, in liters.}
 
 \item{VolumeHeadspace}{Volume of gaseous headspace in the closed system, in liters.}
 
-\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.}
+\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq).}
 
-\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.}
+\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq).}
 }
 \value{
-A data frame to be used for the methanogenesis function
+A data frame to be used for the methanogenesis function.
 }
 \description{
 `init()` sets up the initial environment to be used by the methanogenesis model.

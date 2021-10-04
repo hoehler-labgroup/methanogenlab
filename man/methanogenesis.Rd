@@ -12,33 +12,32 @@ methanogenesis(
   DIC.initial,
   pH.initial,
   K.CO2 = NA,
-  standard.gibbs = -191359.46584,
   temperature,
   VolumeSolution,
   VolumeHeadspace,
   K.CO2HCO3 = NA,
   K.HCO3CO3 = NA,
   delta.DIC = 1e-04,
+  inoculum.cell.number = 1,
   biomass.yield = 2.4,
-  carbon.fraction = 0.44
+  carbon.fraction = 0.44,
+  cell.weight = 3e-14
 )
 }
 \arguments{
 \item{CH4.initial}{Concentration of initial dissolved CH4, in molarity.}
 
-\item{K.CH4}{Henry's constant for CH4.}
+\item{K.CH4}{Henry's constant for CH4. NA by default (calculated by CHNOSZ)}
 
 \item{H2.initial}{Concentration of initial dissolved H2, in molarity.}
 
-\item{K.H2}{Henry's constant for H2.}
+\item{K.H2}{Henry's constant for H2. NA by default (calculated by CHNOSZ)}
 
 \item{DIC.initial}{Concentration of initial dissolved inorganic carbon, in molarity.}
 
 \item{pH.initial}{initial pH.}
 
-\item{K.CO2}{Henry's constant for CH4.}
-
-\item{standard.gibbs}{Standard Gibbs free energy for the reaction,}
+\item{K.CO2}{Henry's constant for CH4. NA by default (calculated by CHNOSZ)}
 
 \item{temperature}{Temperature of the system, in Kelvin.}
 
@@ -46,15 +45,15 @@ methanogenesis(
 
 \item{VolumeHeadspace}{Volume of gaseous headspace in the closed system, in liters.}
 
-\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). 5.223196e-07 by default.}
+\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). NA by default (calculated by CHNOSZ).}
 
 \item{delta.DIC}{step size, in millimolar. 0.1 mM by default.}
 
-\item{biomass.yield}{mass of dry biomass produced per mol of product. 2.4 g/mol product.}
+\item{biomass.yield}{mass of dry biomass produced per mol of product. 2.4 g/mol product by default.}
 
 \item{carbon.fraction}{w/w percent C of biomass, expressed as a decimal. 0.44 by default.}
 
-\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). 6.01886e-11 by default.}
+\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). NA by default (calculated by CHNOSZ).}
 }
 \value{
 A data frame of the model results
@@ -66,6 +65,6 @@ A data frame of the model results
 `init()` sets up the initial environment to be used by the methanogenesis model.
 }
 \examples{
-methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
+methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
 
 }

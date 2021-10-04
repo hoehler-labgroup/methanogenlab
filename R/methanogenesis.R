@@ -8,7 +8,6 @@
 #' @param DIC.initial Concentration of initial dissolved inorganic carbon, in molarity.
 #' @param pH.initial initial pH.
 #' @param K.CO2 Henry's constant for CH4.
-#' @param standard.gibbs Standard Gibbs free energy for the reaction,
 #' @param temperature Temperature of the system, in Kelvin.
 #' @param VolumeSolution Volume of liquid in the closed system, in liters.
 #' @param VolumeHeadspace Volume of gaseous headspace in the closed system, in liters.
@@ -16,7 +15,7 @@
 #' @param KHCO3CO3 Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq).
 #' @return A data frame to be used for the methanogenesis function.
 init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
-                 DIC.initial, pH.initial, K.CO2, standard.gibbs,
+                 DIC.initial, pH.initial, K.CO2,
                  temperature, VolumeSolution, VolumeHeadspace,inoculum.cell.number,
                  biomass.yield,carbon.fraction,cell.weight,K.CO2HCO3,K.HCO3CO3){
 
@@ -48,6 +47,7 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
   H2.DIC.ratio.initial <- (H2.initial/H2.per.step)/DIC.initial
 
   #Gibbs free energy initials
+  standard.gibbs <- standard.gibbs(c("H2","CO2","CH4","H2O"),c(-4,-1,1,2),c("aq","aq","aq","l"),temperature)
   Q.initial <- CH4.initial/((H2.initial^4)*CO2.initial)
   Gibbs.free.energy.initial <- gibbs.step(standard.gibbs,Q.initial,temperature)
 
@@ -60,7 +60,7 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
   init_frame <- data.frame(CH4.initial, nCH4.solution, PCH4.initial, nCH4.headspace.initial, nCH4.total.initial,
                            H2.initial, nH2.solution, PH2.initial, nH2.headspace.initial, nH2.total.initial,
                            DIC.initial, nDIC, PCO2.initial, CO2.initial, alkalinity.initial,
-                           pH.initial,Gibbs.free.energy.initial,CH4.per.step,H2.per.step,H2.CO2.ratio.initial,H2.DIC.ratio.initial,g.biomass.per.nDIC,
+                           pH.initial,standard.gibbs,Gibbs.free.energy.initial,CH4.per.step,H2.per.step,H2.CO2.ratio.initial,H2.DIC.ratio.initial,g.biomass.per.nDIC,
                            initial.cell.number,initial.g.biomass,initial.cell.per.mL)
   return(init_frame)
 }
@@ -77,7 +77,6 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #' @param DIC.initial Concentration of initial dissolved inorganic carbon, in molarity.
 #' @param pH.initial initial pH.
 #' @param K.CO2 Henry's constant for CH4. NA by default (calculated by CHNOSZ)
-#' @param standard.gibbs Standard Gibbs free energy for the reaction,
 #' @param temperature Temperature of the system, in Kelvin.
 #' @param VolumeSolution Volume of liquid in the closed system, in liters.
 #' @param VolumeHeadspace Volume of gaseous headspace in the closed system, in liters.
@@ -88,11 +87,11 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #' @param carbon.fraction w/w percent C of biomass, expressed as a decimal. 0.44 by default.
 #' @return A data frame of the model results
 #' @examples
-#' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,standard.gibbs = -191359.46584,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
+#' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
 #'
 #' @export
 methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
-                           DIC.initial, pH.initial, K.CO2=NA, standard.gibbs=-191359.46584, temperature,
+                           DIC.initial, pH.initial, K.CO2=NA, temperature,
                            VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NA, K.HCO3CO3 = NA,
                            delta.DIC=0.0001, inoculum.cell.number = 1,biomass.yield=2.4,carbon.fraction=0.44,cell.weight=30e-15){
 
@@ -121,7 +120,7 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
 
   #make init data frame
   init <- init(CH4.initial, K.CH4, H2.initial, K.H2,
-               DIC.initial, pH.initial, K.CO2, standard.gibbs,
+               DIC.initial, pH.initial, K.CO2,
                temperature, VolumeSolution, VolumeHeadspace,inoculum.cell.number,
                biomass.yield,carbon.fraction,cell.weight,K.CO2HCO3,K.HCO3CO3)
 
@@ -158,6 +157,7 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
   main$PCO2.step[1] <- init$PCO2.initial
   main$`[CO2].step`[1] <- init$CO2.initial
 
+  standard.gibbs <- init$standard.gibbs
   main$Gibbs.free.energy.step[1] <- init$Gibbs.free.energy.initial
 
   CH4.per.step <- init$CH4.per.step
@@ -210,7 +210,7 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
     main$`[H2]/[DIC] ratio`[i] <- (main$`[H2].step`[i]/H2.per.step)/main$`[DIC].step`[i]
 
     Q.step <- main$`[CH4].step`[i] / (main$`[H2].step`[i]^4 * main$`[CO2].step`[i])
-    main$Gibbs.free.energy.step[i] <- gibbs.step(standard.gibbs, Q.step, temperature)
+    main$Gibbs.free.energy.step[i] <- gibbs.step(standard.gibbs,Q.step, temperature)
 
     main$g.biomass.step[i] <- main$g.biomass.step[i-1]+delta.DIC*VolumeSolution*g.biomass.per.nDIC
     main$cell.number.step[i] <- main$g.biomass.step[i]/cell.weight
