@@ -1,4 +1,4 @@
-Package: Methanogen
+Package: methanogenlab
 Type: Package
 Title: Methanogenesis Model
 Version: 0.1.1
