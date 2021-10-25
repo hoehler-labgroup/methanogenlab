@@ -4,12 +4,14 @@
 \alias{calculate.Kgas}
 \title{Calculates Henry's constant for a gas}
 \usage{
-calculate.Kgas(bunsen, T, P)
+calculate.Kgas(bunsen, temperature, pressure)
 }
 \arguments{
 \item{bunsen}{The Bunsen coefficient for the gas.}
 
-\item{molar.vol.gas}{The moles per unit volume of gas.}
+\item{temperature}{Temperature of the system, in Kelvin.}
+
+\item{pressure}{The pressure of the system, in atm.}
 }
 \description{
 `calculate.Kgas()` uses the provided Bunsen coefficient and moles per volume of gas to calculate Henry's constant.

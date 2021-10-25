@@ -13,12 +13,12 @@
 
 alkalinity <- function(pH, nDIC, VolumeSolution, VolumeHeadspace, temperature, K.CO2HCO3, K.HCO3CO3){
 
-  alkalinity <- as.numeric(scale_metric(calculate_closed_system_alkalinity(
+  alkalinity <- as.numeric(microbialkitchen::scale_metric(microbialkitchen::calculate_closed_system_alkalinity(
     pH = pH,
     TIC = qty(nDIC, "mol"),
     V_liquid = qty(VolumeSolution, "L"),
     V_gas = qty(VolumeHeadspace, "L"),
-    solubility = calculate_gas_solubility("CO2", qty((temperature-273.15), "C")),
+    solubility = microbialkitchen::calculate_gas_solubility("CO2", qty((temperature-273.15), "C")),
     temperature = qty((temperature-273.15), "C"),
     pKa1 = -log10(K.CO2HCO3),
     pKa2 = -log10(K.HCO3CO3),

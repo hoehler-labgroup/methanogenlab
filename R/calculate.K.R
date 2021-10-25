@@ -2,9 +2,10 @@
 #'
 #' `calculate.Kgas()` uses the provided Bunsen coefficient and moles per volume of gas to calculate Henry's constant.
 #' @param bunsen The Bunsen coefficient for the gas.
-#' @param molar.vol.gas The moles per unit volume of gas.
+#' @param temperature Temperature of the system, in Kelvin.
+#' @param pressure The pressure of the system, in atm.
 #' @export
-calculate.Kgas <- function(bunsen,T,P){
+calculate.Kgas <- function(bunsen,temperature,pressure){
   molar.vol.gas <- 0.082057366*T/P
   Kgas <- bunsen / molar.vol.gas
   return(Kgas)
@@ -29,7 +30,7 @@ calculate.Kgas <- function(bunsen,T,P){
 #'
 #' @export
 calculate.KH <- function(reactants, moles, phases, temperature, pressure){
-  KH = 10**(as.numeric(subcrt(reactants,moles,phases,T=temperature-273.15,P=pressure*1.01325)$out$logK))
+  KH = 10**(as.numeric(CHNOSZ::subcrt(reactants,moles,phases,T=temperature-273.15,P=pressure*1.01325)$out$logK))
   return(KH)
 }
 

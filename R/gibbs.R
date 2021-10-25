@@ -15,6 +15,6 @@ gibbs.step <- function(standard.gibbs,Q, temperature){
 #'`standard.gibbs()` determines the standard Gibbs free energy to be used in `gibbs.step()`
 #' @inheritParams calculate.KH
 standard.gibbs <- function(reactants, moles, phases,temperature,pressure=1){
-  standard.gibbs <- 4.184*subcrt(reactants,moles,phases,T=temperature-273.15,P=pressure*1.01325)$out$G
+  standard.gibbs <- 4.184*CHNOSZ::subcrt(reactants,moles,phases,T=temperature-273.15,P=pressure*1.01325)$out$G
   return(standard.gibbs)
 }
