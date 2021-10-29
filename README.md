@@ -17,7 +17,7 @@ devtools package.
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("hoehler-labgroup/Methanogen_Package")
+devtools::install_github("hoehler-labgroup/methanogenlab")
 ```
 
 ------------------------------------------------------------------------
