@@ -24,7 +24,7 @@ devtools::install_github("hoehler-labgroup/methanogenlab")
 
 ## Interactive plot
 
-You can access an online application for methanogenlab [![here](https://hoehler-labgroup.shinyapps.io/methanogenlab/)]. The repository can be found by going to github.com/hoehler-labgroup/ShinyApps
+You can access an online application for methanogenlab [here](https://hoehler-labgroup.shinyapps.io/methanogenlab). The repository can be found by going to [hoehler-labgroup/shinyApps](https://github.com/hoehler-labgroup/shinyApps)
 
 An offline version of the interactive plot can accessed via `python interactive methanogenesis.py`. 
 <!-- ![GUI](https://github.com/mankeldy/Methanogen_Package/blob/master/images/GUI.PNG?raw=true) -->
