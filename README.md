@@ -12,7 +12,7 @@
 
 ## Installation
 
-You can install **[Methanogen\_Package]()** from github with the
+You can install **[methanogenlab]()** from github with the
 devtools package.
 
 ``` r
