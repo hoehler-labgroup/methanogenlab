@@ -2,7 +2,8 @@
 % Please edit documentation in R/growth.R
 \name{growth}
 \alias{growth}
-\title{Determines the number of new cells generated for a given time step size and}
+\title{Determines the number of new cells generated using Monod kinetics for a given time step size based on
+the current chemistry of the system.}
 \usage{
 growth(
   cells.initial,
@@ -23,13 +24,13 @@ growth(
 
 \item{is.CO2.limiting}{Boolean. Determines whether to use the Monod equation for CO2. NA by default (limiting contribution determined by the proportion of current CO2 and Ks.CO2).}
 
-\item{Ks.CO2}{Half-saturation constant for CO2 (microorganism dependent).}
+\item{Ks.CO2}{Half-saturation constant for CO2 (microorganism dependent), in molarity.}
 
 \item{H2}{Current dissolved H2}
 
 \item{is.H2.limiting}{Boolean. Determines whether to use the Monod equation for H2. NA by default (limiting contribution determined by the proportion of current H2 and Ks.H2).}
 
-\item{Ks.H2}{Half-saturation constant for H2 (microorganism dependent).}
+\item{Ks.H2}{Half-saturation constant for H2 (microorganism dependent), in molarity.}
 
 \item{umax}{Maximum growth rate for the microorganism, \ifelse{html}{\out{hr<sup>-1</sup>}}{\eqn{hr^-1}}}
 
@@ -39,5 +40,6 @@ growth(
 Number of new cells made
 }
 \description{
-Determines the number of new cells generated for a given time step size and
+Determines the number of new cells generated using Monod kinetics for a given time step size based on
+the current chemistry of the system.
 }

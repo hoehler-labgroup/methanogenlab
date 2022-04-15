@@ -41,7 +41,7 @@ methanogenesis.time(
 
 \item{is.H2.limiting}{Boolean. Determines whether to use the Monod equation for H2. NA by default (limiting contribution determined by the proportion of current H2 and Ks.H2).}
 
-\item{Ks.H2}{Half-saturation constant for H2 (microorganism dependent).}
+\item{Ks.H2}{Half-saturation constant for H2 (microorganism dependent), in molarity.}
 
 \item{DIC.initial}{Concentration of initial dissolved inorganic carbon, in molarity.}
 
@@ -51,7 +51,7 @@ methanogenesis.time(
 
 \item{is.CO2.limiting}{Boolean. Determines whether to use the Monod equation for CO2. NA by default (limiting contribution determined by the proportion of current CO2 and Ks.CO2).}
 
-\item{Ks.CO2}{Half-saturation constant for CO2 (microorganism dependent).}
+\item{Ks.CO2}{Half-saturation constant for CO2 (microorganism dependent), in molarity.}
 
 \item{umax}{Maximum growth rate for the microorganism, \ifelse{html}{\out{hr<sup>-1</sup>}}{\eqn{hr^-1}}}
 
@@ -84,6 +84,23 @@ A data frame of the model results
 `methanogenesis.time()` calculates CH4 produced, H2 consumed, CO2 consumed, pH, and Gibbs free energy changes as dissolved inorganic carbon is consumed over time.
 }
 \examples{
-methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
-
+methanogenesis.time(
+CH4.initial= 1e-6,
+H2.initial= 5e-4,
+is.H2.limiting=FALSE,
+Ks.H2=10e-6,
+DIC.initial= 3.2e-3,
+pH.initial= 7.5,
+is.CO2.limiting=TRUE,
+Ks.CO2=20e-6,
+umax=0.6,
+temperature= 273.15+40,
+VolumeSolution = 80e-3,
+VolumeHeadspace = 20e-3,
+time.step=0.1,
+total.time=50,
+inoculum.cell.number = 1e6,
+biomass.yield=2.4,
+carbon.fraction=0.44,
+cell.weight=30e-15)
 }

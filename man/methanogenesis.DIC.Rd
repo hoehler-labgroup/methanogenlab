@@ -66,6 +66,14 @@ A data frame of the model results
 `methanogenesis.DIC()` calculates CH4 produced, H2 consumed, CO2 consumed, pH, and Gibbs free energy changes as dissolved inorganic carbon is consumed.
 }
 \examples{
-methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
+methanogenesis(
+CH4.initial = 1e-6,
+H2.initial = 5e-4,
+DIC.initial = 3.2e-3,
+pH.initial = 7.5,
+temperature = 273.15+40,
+VolumeSolution = 80e-3,
+VolumeHeadspace = 20e-3,
+delta.DIC = 0.0001)
 
 }
