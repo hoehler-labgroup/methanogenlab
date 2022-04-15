@@ -1,7 +1,7 @@
 Package: methanogenlab
 Type: Package
 Title: Methanogenesis Model
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person("Alta", "Howells", , "alta.howells@gmail.com", role=c("aut")),
     person("Kylie", "Akiyama", , "kylie.akiyama@berkeley.edu",  role="aut"),
