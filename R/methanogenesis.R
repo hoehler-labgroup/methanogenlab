@@ -90,10 +90,10 @@ init <- function(CH4.initial, K.CH4, H2.initial, K.H2,
 #' methanogenesis(CH4.initial = 1e-6,H2.initial = 5e-4,DIC.initial = 3.2e-3,pH.initial = 7.5,temperature = 273.15+40,VolumeSolution = 80e-3,VolumeHeadspace = 20e-3,delta.DIC = 0.0001)
 #'
 #' @export
-methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
-                           DIC.initial, pH.initial, K.CO2=NA, temperature,
+methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,is.H2.limiting=NA,Ks.H2,
+                           DIC.initial, pH.initial, K.CO2=NA,is.CO2.limiting=NA,Ks.CO2,umax, temperature,
                            VolumeSolution, VolumeHeadspace, K.CO2HCO3 = NA, K.HCO3CO3 = NA,
-                           delta.DIC=0.0001, inoculum.cell.number = 1,biomass.yield=2.4,carbon.fraction=0.44,cell.weight=30e-15){
+                           time.step=0.1, total.time=5, inoculum.cell.number = 1e6,biomass.yield=2.4,carbon.fraction=0.44,cell.weight=30e-15){
 
   #Calculates Henry's constants if they aren't already provided
   if (is.na(K.CH4)){
@@ -116,7 +116,6 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
     K.HCO3CO3 <- calculate.KH(c("HCO3-","CO3-2","H+"),c(-1,1,1),c("aq","aq","aq"), temperature = temperature,pressure = 1)
   }
 
-  total.steps <- DIC.initial/delta.DIC #Runs until all DIC has been consumed and returns all the model output
 
   #make init data frame
   init <- init(CH4.initial, K.CH4, H2.initial, K.H2,
@@ -132,7 +131,7 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
   main <- setNames(data.frame(matrix(ncol = length(columns), nrow = 1)), columns)
 
   #Set up initial conditions, index of 1
-
+  main$time[1] <- 0
   main$DIC.consumed[1] <- 0
   main$CH4.produced[1] <- 0
   main$H2.consumed[1] <- 0
@@ -173,9 +172,19 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
   main$`[H2]/[DIC] ratio`[1] <- init$H2.DIC.ratio.initial
   percent.change.list <- c("PCH4.step","[CH4].step","PH2.step","[H2].step","[DIC].step","PCO2.step","[CO2].step","systempH.step","Gibbs.free.energy.step","cell.per.mL")
 
+  total.steps <- total.time/time.step
+  print(total.steps)
   for (i in 2:total.steps){
 
     main <- rbind(main, NA)
+
+    #Number of new cells sets the change in DIC
+    main$cell.number.step[i] <- growth(main$cell.number.step[i-1],main$`[CO2].step`[i-1],is.CO2.limiting,Ks.CO2,main$`[H2].step`[i-1],is.H2.limiting,Ks.H2,umax,time.step)+main$cell.number.step[i-1]
+    main$g.biomass.step[i] <- main$cell.number.step[i]*cell.weight
+    main$cell.per.mL[i] <- main$cell.number.step[i]/(VolumeSolution*1e3)
+
+    delta.DIC <- (main$g.biomass.step[i]-main$g.biomass.step[i-1])*carbon.fraction
+
     main$DIC.consumed[i] <- main$DIC.consumed[i-1]+delta.DIC
     main$CH4.produced[i] <- main$CH4.produced[i-1]+CH4.per.step*delta.DIC
     main$H2.consumed[i] <- main$H2.consumed[i-1]+H2.per.step*delta.DIC
@@ -212,9 +221,7 @@ methanogenesis <- function(CH4.initial, K.CH4=NA, H2.initial, K.H2=NA,
     Q.step <- main$`[CH4].step`[i] / (main$`[H2].step`[i]^4 * main$`[CO2].step`[i])
     main$Gibbs.free.energy.step[i] <- gibbs.step(standard.gibbs,Q.step, temperature)
 
-    main$g.biomass.step[i] <- main$g.biomass.step[i-1]+delta.DIC*VolumeSolution*g.biomass.per.nDIC
-    main$cell.number.step[i] <- main$g.biomass.step[i]/cell.weight
-    main$cell.per.mL[i] <- main$cell.number.step[i]/(VolumeSolution*1e3)
+    main$`time`[i] <- main$`time`[i-1]+time.step
 
   }
 
