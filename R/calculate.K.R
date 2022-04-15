@@ -6,7 +6,7 @@
 #' @param pressure The pressure of the system, in atm.
 #' @export
 calculate.Kgas <- function(bunsen,temperature,pressure){
-  molar.vol.gas <- 0.082057366*T/P
+  molar.vol.gas <- 0.082057366*temperature/pressure
   Kgas <- bunsen / molar.vol.gas
   return(Kgas)
 }
@@ -17,13 +17,12 @@ calculate.Kgas <- function(bunsen,temperature,pressure){
 #' @param reactants A vector of all components involved in the reaction, both reactants and products.
 #' @param moles A vector of the molar coefficients for the reaction, with negative values indicating reactants and positive values indicating products.
 #' @param phases A vector of the phases for all components in the reaction, either "aq", "l", or "g".
-#' @param temperature Temperature of the system, in Kelvin.
 #' @param pressure The pressure of the system, in atm.
+#' @inheritParams methanogenesis.time
 #' @details
 #' For the following chemical equilibrium:
 #' \loadmathjax
-#' \mjdeqn{CO_2(aq)+H_2O(l) \leftrightharpoons {HCO_3}^{2-}(aq)+H^+(aq)
-#' }{ASCII representation}
+#' \mjdeqn{CO_2(aq)+H_2O(l) \rightleftharpoons {HCO_3}^{2-}(aq)+H^+(aq)}{ASCII representation}
 #' an example can found below
 #' @examples
 #' calculate_KH(c("CO2","H2O","HCO3-","H+"),c(-1,-1,1,1),c("aq","l","aq","aq"), 273.15+37,1.7)

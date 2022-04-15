@@ -15,9 +15,9 @@ PCO2(
 )
 }
 \arguments{
-\item{pH}{pH of the solution.}
+\item{pH}{pH of the system.}
 
-\item{nDIC}{Moles of dissolved inorganic carbon.}
+\item{nDIC}{Moles of dissolved inorganic carbon}
 
 \item{VolumeSolution}{Volume of liquid in the closed system, in liters.}
 
@@ -27,7 +27,7 @@ PCO2(
 
 \item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq).}
 
-\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq).}
+\item{K.HCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3– (aq).}
 }
 \value{
 CO2 pressure in the head space, in atm.

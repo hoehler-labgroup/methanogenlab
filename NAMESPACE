@@ -2,7 +2,8 @@
 
 export(calculate.KH)
 export(calculate.Kgas)
-export(methanogenesis)
+export(methanogenesis.DIC)
+export(methanogenesis.time)
 import(dplyr)
 import(mathjaxr)
 importFrom(CHNOSZ,thermo)

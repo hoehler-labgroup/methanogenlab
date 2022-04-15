@@ -1,7 +1,9 @@
 #' Determines the number of new cells generated for a given time step size and
-#' the chemistry at a given time.
 #'
-#' @param cells.initial Number of cells currently in the system at a given time
+#' @inheritParams methanogenesis.time
+#' @param cells.initial Number of cells currently in the system.
+#' @param CO2 Current dissolved CO2
+#' @param H2 Current dissolved H2
 #' @return Number of new cells made
 
 growth <- function(cells.initial,CO2,is.CO2.limiting=NA,Ks.CO2,H2,is.H2.limiting=NA,Ks.H2,umax,time.step){

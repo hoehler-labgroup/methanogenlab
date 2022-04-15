@@ -15,19 +15,19 @@ alkalinity(
 )
 }
 \arguments{
+\item{pH}{pH of the system.}
+
 \item{nDIC}{Moles of dissolved inorganic carbon}
 
 \item{VolumeSolution}{Volume of liquid in the closed system, in liters.}
 
-\item{VolumeHeadspace}{Volume of gaseous headspace in the closed system, in liters.}
+\item{VolumeHeadspace}{Volume of gaseous head space in the closed system, in liters.}
 
 \item{temperature}{Temperature of the system, in Kelvin.}
 
 \item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq).}
 
-\item{pH.initial}{Initial pH}
-
-\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq).}
+\item{K.HCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3– (aq).}
 }
 \value{
 alkalinity of the solution, in millimolar.

@@ -7,9 +7,9 @@
 H2.coefficient(biomass.yield, carbon.fraction)
 }
 \arguments{
-\item{biomass.yield}{mass of dry biomass produced per mol of product.}
+\item{biomass.yield}{mass of dry biomass produced per mol of product. 2.4 g/mol product by default.}
 
-\item{carbon.fraction}{w/w percent C of biomass, expressed as a decimal.}
+\item{carbon.fraction}{w/w percent C of biomass, expressed as a decimal. 0.44 by default.}
 }
 \value{
 H2 consumed, in mol/mol DIC

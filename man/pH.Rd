@@ -15,11 +15,11 @@ pH(
 )
 }
 \arguments{
-\item{nDIC}{Moles of dissolved inorganic carbon.}
+\item{nDIC}{Moles of dissolved inorganic carbon}
 
 \item{VolumeSolution}{Volume of liquid in the closed system, in liters.}
 
-\item{VolumeHeadspace}{Volume of gaseous headspace in the closed system, in liters.}
+\item{VolumeHeadspace}{Volume of gaseous head space in the closed system, in liters.}
 
 \item{temperature}{Temperature of the system, in Kelvin.}
 
@@ -27,7 +27,7 @@ pH(
 
 \item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq).}
 
-\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq).}
+\item{K.HCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3– (aq).}
 }
 \value{
 pH of the solution.

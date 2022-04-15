@@ -23,8 +23,7 @@ calculate.KH(reactants, moles, phases, temperature, pressure)
 \details{
 For the following chemical equilibrium:
 \loadmathjax
-\mjdeqn{CO_2(aq)+H_2O(l) \leftrightharpoons {HCO_3}^{2-}(aq)+H^+(aq)
-}{ASCII representation}
+\mjdeqn{CO_2(aq)+H_2O(l) \rightleftharpoons {HCO_3}^{2-}(aq)+H^+(aq)}{ASCII representation}
 an example can found below
 }
 \examples{

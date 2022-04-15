@@ -26,27 +26,35 @@ init(
 \arguments{
 \item{CH4.initial}{Concentration of initial dissolved CH4, in molarity.}
 
-\item{K.CH4}{Henry's constant for CH4.}
+\item{K.CH4}{Henry's constant for CH4. NA by default (calculated by CHNOSZ).}
 
 \item{H2.initial}{Concentration of initial dissolved H2, in molarity.}
 
-\item{K.H2}{Henry's constant for H2.}
+\item{K.H2}{Henry's constant for H2. NA by default (calculated by CHNOSZ).}
 
 \item{DIC.initial}{Concentration of initial dissolved inorganic carbon, in molarity.}
 
 \item{pH.initial}{initial pH.}
 
-\item{K.CO2}{Henry's constant for CH4.}
+\item{K.CO2}{Henry's constant for CH4. NA by default (calculated by CHNOSZ).}
 
 \item{temperature}{Temperature of the system, in Kelvin.}
 
 \item{VolumeSolution}{Volume of liquid in the closed system, in liters.}
 
-\item{VolumeHeadspace}{Volume of gaseous headspace in the closed system, in liters.}
+\item{VolumeHeadspace}{Volume of gaseous head space in the closed system, in liters.}
 
-\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq).}
+\item{inoculum.cell.number}{Initial number of cells. 1e6 by default.}
 
-\item{KHCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq).}
+\item{biomass.yield}{mass of dry biomass produced per mol of product. 2.4 g/mol product by default.}
+
+\item{carbon.fraction}{w/w percent C of biomass, expressed as a decimal. 0.44 by default.}
+
+\item{cell.weight}{individual cell mass, in grams. 30e-15 by default.}
+
+\item{K.CO2HCO3}{Equilibrium constant for the dissociation of CO2(aq) to HCO3-(aq). NA by default (calculated by CHNOSZ).}
+
+\item{K.HCO3CO3}{Equilibrium constant for the dissociation of HCO3- (aq) to CO3-- (aq). NA by default (calculated by CHNOSZ).}
 }
 \value{
 A data frame to be used for the methanogenesis function.
