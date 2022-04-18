@@ -49,7 +49,7 @@ cell.weight=30e-15)
 )
 ```
 
-Documentation for all functions within methanogenlab can be found in the [manual](methanogenlab_0.1.2.pdf).
+Documentation for all functions within methanogenlab can be found in the [manual](pdf%20manuals/methanogenlab_0.1.2.pdf)
 
 ------------------------------------------------------------------------
 
